@@ -7,9 +7,11 @@ contract Election {
         uint voteCount;
     }
 
-    mapping(address => bool) public voters;
+    mapping(address => bool) public voters; //to block double voting
     mapping(uint => Candidate) public candidates;
     uint public candidatesCount;
+
+    //Event for logs
     event votedEvent (
         uint indexed _candidateId
     );
@@ -25,6 +27,7 @@ contract Election {
     }
 
     function vote (uint _candidateId) public {
+        //check
         require(!voters[msg.sender]);
         require(_candidateId > 0 && _candidateId <= candidatesCount);
         voters[msg.sender] = true;
